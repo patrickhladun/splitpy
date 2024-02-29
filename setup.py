@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name='pysplit',
-    version='0.1',
+    version='0.0.1',
     py_modules=['pysplit'],
     install_requires=[],
     entry_points='''
@@ -11,7 +11,7 @@ setup(
     ''',
     options={
         'build_scripts': {
-            'executable': '/usr/bin/env python'
+            'executable': '/usr/pysplit'
         }
     }
 )
