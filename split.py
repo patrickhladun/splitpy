@@ -1,11 +1,11 @@
-#!/usr/bin/env python
+import argparse
 
-import sys
-import subprocess
 
 def get_first_line(input_string, max_length):
+    # Split the input string into words
     words = input_string.split()
 
+    # Initialize variables
     first_piece = ''
     second_piece = ''
     current_length = 0
@@ -68,32 +68,23 @@ def get_lines_from_string(input_string, max_length):
 
 
 def format_text(input_string, max_length):
-    first_piece, second_piece = get_first_line(input_string, max_length)
+    combined_string = ' '.join(input_string.strip().split())
+    first_piece, second_piece = get_first_line(combined_string, max_length)
     lines = get_lines_from_string(second_piece, max_length)
 
-    formatted_text = '"' + first_piece + ' "\n'
+    print('"' + first_piece + ' "')
     for line in lines:
-        formatted_text += '"' + line + ' "\n'
-
-    return formatted_text
+        print('"' + line + ' "')
 
 
 def main():
-    if len(sys.argv) != 3:
-        print("Usage: pysplit <input_string> <max_length>")
-        sys.exit(1)
+    parser = argparse.ArgumentParser(description='Split and combine strings based on maximum line length.')
+    parser.add_argument('input_string', type=str, help='The input string to split or combine')
+    parser.add_argument('max_length', type=int, help='The maximum length of each line')
+    args = parser.parse_args()
 
-    input_string = sys.argv[1]
-    max_length = int(sys.argv[2])
+    format_text(args.input_string, args.max_length)
 
-    formatted_text = format_text(input_string, max_length)
-    print(formatted_text)
 
-    # Copy formatted text to clipboard if available
-    try:
-        subprocess.run(['pbcopy'], input=formatted_text.strip(), encoding='utf-8', check=True)
-    except Exception as e:
-        pass
-
-if __name__ == "__main__":
+if __name__ == '__main__':
     main()
